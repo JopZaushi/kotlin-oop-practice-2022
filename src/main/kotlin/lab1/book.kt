@@ -1,3 +1,3 @@
 package lab1
 
-data class Book(val _name: String, val _author: String, val _year: Int)
+data class Book(val name: String, val author: String, val year: Int)

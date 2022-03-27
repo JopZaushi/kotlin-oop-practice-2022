@@ -6,57 +6,50 @@ import org.junit.jupiter.api.Test
 internal class UnitTest1 {
     @Test
     fun testFreshOfYear() {
-        var freshBook = Int.MIN_VALUE
         val string = "1.Роботы//Горохов П.А,Зиянгиров Р.Р//1915\n" +
                 "2.Круг ада//Понаморёв М.Е//1999\n" +
                 "3.Помощь другим//Шелудько Г.В//2002"
         val list: List<Book> = parseBooks(string)
-        for (index in list) if (index._year > freshBook) freshBook = index._year
-        assertEquals(2002, freshBook)
+        assertEquals(2002, bookFreshByYear(list)[0].year)
     }
 
     @Test
     fun testEldestOfYear() {
-        var eldestBook = Int.MAX_VALUE
         val string = "1.Роботы//Горохов П.А,Зиянгиров Р.Р//1915\n" +
                 "2.Круг ада//Понаморёв М.Е//1999\n" +
                 "3.Помощь другим//Шелудько Г.В//2002"
         val list: List<Book> = parseBooks(string)
-        for (index in list) if (index._year < eldestBook) eldestBook = index._year
-        assertEquals(1915, eldestBook)
+        assertEquals(1915, bookEldestByYear(list)[0].year)
     }
 
     @Test
     fun testLongOfYear() {
-        var longNameInt = Int.MIN_VALUE
         val string = "1.Роботы//Горохов П.А,Зиянгиров Р.Р//1915\n" +
                 "2.Круг ада//Понаморёв М.Е//1999\n" +
                 "3.Помощь другим//Шелудько Г.В//2002"
         val list: List<Book> = parseBooks(string)
-        var longTitle: String = list.toString()
-        for (index in list) {
-            if (index._name.length > longNameInt) {
-                longNameInt = index._name.length
-                longTitle = index._name
-            }
-        }
-        assertEquals("Помощь другим", longTitle)
+        assertEquals("Помощь другим", bookLongestTitle(list)[0].name)
     }
 
     @Test
     fun testShortOfYear() {
-        var shortNameInt = Int.MAX_VALUE
         val string = "1.Роботы//Горохов П.А,Зиянгиров Р.Р//1915\n" +
                 "2.Круг ада//Понаморёв М.Е//1999\n" +
                 "3.Помощь другим//Шелудько Г.В//2002"
         val list: List<Book> = parseBooks(string)
-        var shortTitle: String = list.toString()
-        for (index in list) {
-            if (index._name.length < shortNameInt) {
-                shortNameInt = index._name.length
-                shortTitle = index._name
-            }
-        }
-        assertEquals("Роботы", shortTitle)
+        assertEquals("Роботы", bookShortTitle(list)[0].name)
+    }
+
+    @Test
+    fun testParser() {
+        val string = "1.Роботы//Горохов П.А,Зиянгиров Р.Р//1915\n" +
+                "2.Круг ада//Понаморёв М.Е//1999\n" +
+                "3.Помощь другим//Шелудько Г.В//2002"
+        assertEquals("Роботы", parseBooks(string)[0].name)
+        assertEquals("Горохов П.А,Зиянгиров Р.Р", parseBooks(string)[0].author)
+        assertEquals(1915, parseBooks(string)[0].year)
+        assertEquals("Помощь другим", parseBooks(string)[2].name)
+        assertEquals("Шелудько Г.В", parseBooks(string)[2].author)
+        assertEquals(2002, parseBooks(string)[2].year)
     }
 }

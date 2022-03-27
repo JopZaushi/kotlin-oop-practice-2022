@@ -37,40 +37,41 @@ fun parseBooks(books: String): List<Book> {
     return listOfBooks
 }
 
-fun bookFreshByYear(list: List<Book>): Int {
+fun bookFreshByYear(list: List<Book>): List<Book> {
     var freshBook = Int.MIN_VALUE
-    for (index in list) if (index._year > freshBook) freshBook = index._year
-    return freshBook
+    for (index in list)
+        if (index.year > freshBook) freshBook = index.year
+    return list.filter { it.year == freshBook }
 }
 
-fun bookEldestByYear(list: List<Book>): Int {
+fun bookEldestByYear(list: List<Book>): List<Book> {
     var eldestBook = Int.MAX_VALUE
-    for (index in list) if (index._year < eldestBook) eldestBook = index._year
-    return eldestBook
+    for (index in list) if (index.year < eldestBook) eldestBook = index.year
+    return list.filter { it.year == eldestBook }
 }
 
-fun bookLongestTitle(list: List<Book>): String {
+fun bookLongestTitle(list: List<Book>): List<Book> {
     var longNameInt = Int.MIN_VALUE
     var longTitle: String = list.toString()
     for (index in list) {
-        if (index._name.length > longNameInt) {
-            longNameInt = index._name.length
-            longTitle = index._name
+        if (index.name.length > longNameInt) {
+            longNameInt = index.name.length
+            longTitle = index.name
         }
     }
-    return longTitle
+    return list.filter { it.name == longTitle }
 }
 
-fun bookShortTitle(list: List<Book>): String {
+fun bookShortTitle(list: List<Book>): List<Book> {
     var shortNameInt = Int.MAX_VALUE
     var shortTitle: String = list.toString()
     for (index in list) {
-        if (index._name.length < shortNameInt) {
-            shortNameInt = index._name.length
-            shortTitle = index._name
+        if (index.name.length < shortNameInt) {
+            shortNameInt = index.name.length
+            shortTitle = index.name
         }
     }
-    return shortTitle
+    return list.filter { it.name == shortTitle }
 }
 
 fun main() {
