@@ -3,6 +3,7 @@ package lab3
 interface NoteService {
     val notes: MutableList<Note>
 
+
     fun getAllNotes(): List<Note>
     fun getAllTextNotes(text: String): List<Note>
     //fun getAllTasks(): List<Note>
@@ -17,22 +18,22 @@ interface NoteService {
 }
 
 
-sealed class Note() {
+sealed class Note(open val title: String, open val date: String) {
 
-    class TextNote(private val title: String, private val content: String, private val date: String) : Note() {
+    class TextNote(override val title: String, private val content: String, override val date: String) : Note(title, date) {
         override fun toString(): String {
             return "TextNote(title='$title', content='$content', date='$date')"
         }
 
     }
 
-    class Task(private val title: String, private val content: String, private val deadline: String, private val date: String) : Note() {
+    class Task(override val title: String, private val content: String, private val deadline: String, override val date: String) : Note(title, date) {
         override fun toString(): String {
             return "Task(title='$title', content='$content', deadline='$deadline', date='$date')"
         }
     }
 
-    class Link(private val title: String, private val content: String, private val url: String, private val date: String) : Note() {
+    class Link(override val title: String, private val content: String, private val url: String, override val date: String) : Note(title, date) {
         override fun toString(): String {
             return "Link(title='$title', content='$content', url='$url', date='$date')"
         }
@@ -41,7 +42,7 @@ sealed class Note() {
 
 }
 
-class Redactor() : NoteService {
+class Redactor : NoteService {
     override val notes: MutableList<Note> = mutableListOf()
 
     override fun createTextNote(title: String, content: String, date: String): Note.TextNote {
@@ -76,7 +77,7 @@ class Redactor() : NoteService {
     override fun sortByTitle(): List<Note> {
         val sortNotes: MutableList<Note> = mutableListOf()
         for ((number, index) in notes.withIndex())
-            if (index.javaClass.simpleName == "f") sortNotes.add(notes[number])
+            if (index.title == "ruslan") sortNotes.add(notes[number])
         return sortNotes
     }
 
@@ -97,5 +98,5 @@ fun main() {
 
     println(note1)
     println(note1.getAllTextNotes("TextNote"))
-
+    println(note1.sortByTitle())
 }
