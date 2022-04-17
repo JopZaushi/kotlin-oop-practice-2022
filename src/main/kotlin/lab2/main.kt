@@ -1,15 +1,15 @@
 package lab2
 
 fun main() {
-    val color1 = Color("255", "255", "255", "5")
-    val color2 = Color("1", "1", "1", "0")
-    val color3 = Color("255", "0", "0", "1")
+    val color1 = Color(255, 255, 255, 5)
+    val color2 = Color(1, 1, 1, 0)
+    val color3 = Color(255, 0, 0, 1)
 
-    val shape1 = Triangle(color1, color1, 4.0, 2.0)
+    val shape1 = Triangle(color1, color1, 3.0, 2.0, 5.0)
     val shape2 = Circle(color1, color2, 3.0)
     val shape3 = Square(color2, color1, 1.0)
     val shape4 = Rectangle(color2, color2, 5.0, 4.0)
-    val shape5 = Triangle(color1, color3, 4.0, 2.0)
+    val shape5 = Triangle(color1, color3, 4.0, 2.0, 5.0)
     val shape6 = Square(color2, color2, 2.0)
     val groupOfFigure = ShapeCollector()
 
@@ -39,5 +39,5 @@ fun main() {
     println("Фигуры с одинаковой обводкой:")
     println(groupOfFigure.figureOfMapBorder())
     println("Вывести конкретные фигуры:")
-    println(groupOfFigure.figureSquare("Square"))
+    println(groupOfFigure.figureGroupOfType(Square::class.java))
 }

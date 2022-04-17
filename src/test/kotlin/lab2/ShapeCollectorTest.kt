@@ -7,8 +7,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun addFigure() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         val groupOfFigureExtra = ShapeCollector()
@@ -24,8 +24,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun minAreaFigureOfGroup() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         groupOfFigure.addFigure(shape1)
@@ -35,8 +35,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun maxAreaFigureOfGroup() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         groupOfFigure.addFigure(shape1)
@@ -46,8 +46,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun sumAreaFigureOfGroup() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         groupOfFigure.addFigure(shape1)
@@ -57,9 +57,9 @@ internal class ShapeCollectorTest {
 
     @Test
     fun findFigureOfGroupByBorderColor() {
-        val color1 = Color("255", "255", "255", "5")
-        val color2 = Color("1", "1", "1", "0")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val color2 = Color(1, 1, 1, 0)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color2, 3.0)
         val shape3 = Square(color2, color1, 1.0)
         val shape4 = Rectangle(color2, color2, 5.0, 4.0)
@@ -73,9 +73,9 @@ internal class ShapeCollectorTest {
 
     @Test
     fun findFigureOfGroupByFillColor() {
-        val color1 = Color("255", "255", "255", "5")
-        val color2 = Color("1", "1", "1", "0")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val color2 = Color(1, 1, 1, 0)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color2, 3.0)
         val shape3 = Square(color2, color1, 1.0)
         val shape4 = Rectangle(color2, color2, 5.0, 4.0)
@@ -89,8 +89,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun getGroupOfFigure() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         groupOfFigure.addFigure(shape1)
@@ -100,8 +100,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun getSizeGroup() {
-        val color1 = Color("255", "255", "255", "5")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color1, 3.0)
         val groupOfFigure = ShapeCollector()
         val groupOfFigureExtra = ShapeCollector()
@@ -115,9 +115,9 @@ internal class ShapeCollectorTest {
 
     @Test
     fun figureOfMapBorder() {
-        val color1 = Color("255", "255", "255", "5")
-        val color2 = Color("1", "1", "1", "0")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val color2 = Color(1, 1, 1, 0)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color2, 3.0)
         val shape3 = Square(color2, color1, 1.0)
         val shape4 = Rectangle(color2, color2, 5.0, 4.0)
@@ -132,9 +132,9 @@ internal class ShapeCollectorTest {
 
     @Test
     fun figureOfMapFill() {
-        val color1 = Color("255", "255", "255", "5")
-        val color2 = Color("1", "1", "1", "0")
-        val shape1 = Triangle(color1, color1, 4.0, 2.0)
+        val color1 = Color(255, 255, 255, 5)
+        val color2 = Color(1, 1, 1, 0)
+        val shape1 = Triangle(color1, color1, 4.0, 2.0, 5.0)
         val shape2 = Circle(color1, color2, 3.0)
         val shape3 = Square(color2, color1, 1.0)
         val shape4 = Rectangle(color2, color2, 5.0, 4.0)
@@ -149,8 +149,8 @@ internal class ShapeCollectorTest {
 
     @Test
     fun figureSquare() {
-        val color1 = Color("255", "255", "255", "5")
-        val color2 = Color("1", "1", "1", "0")
+        val color1 = Color(255, 255, 255, 5)
+        val color2 = Color(1, 1, 1, 0)
         val shape1 = Square(color1, color2, 4.0)
         val shape2 = Circle(color1, color2, 3.0)
         val shape3 = Square(color2, color1, 1.0)
@@ -158,6 +158,6 @@ internal class ShapeCollectorTest {
         groupOfFigure.addFigure(shape1)
         groupOfFigure.addFigure(shape2)
         groupOfFigure.addFigure(shape3)
-        assertEquals(listOf(shape1, shape3), groupOfFigure.figureSquare("Square"))
+        assertEquals(listOf(shape1, shape3), groupOfFigure.figureGroupOfType(Square::class.java))
     }
 }

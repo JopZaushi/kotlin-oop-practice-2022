@@ -8,6 +8,8 @@ class ShapeCollector {
     }
 
     fun minAreaFigureOfGroup(): ColoredShape2d {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         var minArea = Double.MAX_VALUE
         var numElement = 0
         for ((number, index) in groupFigure.withIndex())
@@ -19,6 +21,8 @@ class ShapeCollector {
     }
 
     fun maxAreaFigureOfGroup(): ColoredShape2d {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         var maxArea = Double.MIN_VALUE
         var numElement = 0
         for ((number, index) in groupFigure.withIndex())
@@ -30,6 +34,8 @@ class ShapeCollector {
     }
 
     fun sumAreaFigureOfGroup(): Double {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         var sum = 0.0
         for (index in groupFigure)
             sum += index.calcArea()
@@ -37,6 +43,8 @@ class ShapeCollector {
     }
 
     fun findFigureOfGroupByBorderColor(_borderColor: Color): List<ColoredShape2d> {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         val groupFigureBorder: MutableList<ColoredShape2d> = mutableListOf()
         for ((number, index) in groupFigure.withIndex())
             if (index.borderColor == _borderColor) groupFigureBorder.add(groupFigure[number])
@@ -44,6 +52,8 @@ class ShapeCollector {
     }
 
     fun findFigureOfGroupByFillColor(_fillColor: Color): List<ColoredShape2d> {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         val groupFigureFill: MutableList<ColoredShape2d> = mutableListOf()
         for ((number, index) in groupFigure.withIndex())
             if (index.fillColor == _fillColor) groupFigureFill.add(groupFigure[number])
@@ -59,18 +69,19 @@ class ShapeCollector {
     }
 
     fun figureOfMapBorder(): Map<Color, List<ColoredShape2d>> {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         return groupFigure.groupBy { it.borderColor }
     }
 
     fun figureOfMapFill(): Map<Color, List<ColoredShape2d>> {
+        if (groupFigure.isEmpty())
+            throw Exception("There are no figures")
         return groupFigure.groupBy { it.fillColor }
     }
 
-    fun figureSquare(shape: String): List<ColoredShape2d> {
-        val groupFigureShape: MutableList<ColoredShape2d> = mutableListOf()
-        for ((number, index) in groupFigure.withIndex())
-            if (index.javaClass.simpleName == shape) groupFigureShape.add(groupFigure[number])
-        return groupFigureShape
+    fun figureGroupOfType(shapeClass: Class<out ColoredShape2d>): List<ColoredShape2d> {
+        return groupFigure.filterIsInstance(shapeClass)
     }
 
     operator fun get(index: Int): ColoredShape2d {
