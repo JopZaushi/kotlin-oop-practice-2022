@@ -9,6 +9,6 @@ data class Color(
 ) {
     init {
         if (this.red !in 0..255 || (this.green !in 0..255) || (this.blue !in 0..255) || (this.transparency !in 0..255))
-            throw Exception("Invalid Arguments")
+            throw IllegalArgumentException("Invalid Arguments")
     }
 }

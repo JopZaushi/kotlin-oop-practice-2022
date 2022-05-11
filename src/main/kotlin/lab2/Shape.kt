@@ -9,7 +9,7 @@ data class Triangle(
 ) : ColoredShape2d {
     init {
         if ((sideA <= 0) || (sideB <= 0) || (sideC <= 0) || (sideA > sideB + sideC) || (sideB > sideA + sideC) || (sideC > sideA + sideB))
-            throw Exception("Invalid Arguments")
+            throw IllegalArgumentException("Invalid Arguments")
     }
 
     override fun calcArea(): Double {
@@ -25,7 +25,7 @@ data class Circle(
 ) : ColoredShape2d {
     init {
         if (radius <= 0)
-            throw Exception("Invalid Arguments")
+            throw IllegalArgumentException("Invalid Arguments")
     }
 
     override fun calcArea(): Double {
