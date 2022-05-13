@@ -4,7 +4,7 @@ sealed class Note(open val title: String, open val date: Date) {
 
     class TextNote(
         override val title: String,
-        private val content: String,
+        val content: String,
         override val date: Date,
     ) : Note(title, date) {
         override fun toString(): String {
@@ -17,8 +17,8 @@ sealed class Note(open val title: String, open val date: Date) {
 
     class Task(
         override val title: String,
-        private val content: String,
-        private val deadline: String,
+        val content: String,
+        val deadline: String,
         override val date: Date,
     ) : Note(title, date) {
         override fun toString(): String {
@@ -30,8 +30,8 @@ sealed class Note(open val title: String, open val date: Date) {
 
     class Link(
         override val title: String,
-        private val content: String,
-        private val url: String,
+        val content: String,
+        val url: String,
         override val date: Date,
     ) : Note(title, date) {
         override fun toString(): String {

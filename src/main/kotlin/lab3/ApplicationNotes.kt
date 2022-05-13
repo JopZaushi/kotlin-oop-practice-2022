@@ -2,7 +2,7 @@ package lab3
 
 class ApplicationNotes : NoteService {
 
-    override val notes: MutableList<Note> = mutableListOf()
+    private val notes: MutableList<Note> = mutableListOf()
 
     override fun createTextNote(title: String, content: String, date: Date): Note.TextNote {
         val noteText = Note.TextNote(title, content, date)
@@ -24,53 +24,38 @@ class ApplicationNotes : NoteService {
 
     override fun getAllNotes(): List<Note> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
+           return emptyList()
         return notes
     }
 
-    override fun getAllTextNotes(): List<Note> {
+    override fun getAllTextNotes(): List<Note.TextNote> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
-        val textNotes: MutableList<Note> = mutableListOf()
-        for ((number, index) in notes.withIndex())
-            if (index.javaClass.simpleName == "TextNote") textNotes.add(notes[number])
-        if (textNotes.isEmpty())
-            throw Exception("There are no TextNotes")
-        return textNotes
+            return emptyList()
+        return notes.filterIsInstance<Note.TextNote>()
     }
 
-    override fun getAllTasks(): List<Note> {
+    override fun getAllTasks(): List<Note.Task> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
-        val taskNotes: MutableList<Note> = mutableListOf()
-        for ((number, index) in notes.withIndex())
-            if (index.javaClass.simpleName == "Task") taskNotes.add(notes[number])
-        if (taskNotes.isEmpty())
-            throw Exception("There are no Tasks")
-        return taskNotes
+            return emptyList()
+        return notes.filterIsInstance<Note.Task>()
     }
 
-    override fun getAllLinks(): List<Note> {
+    override fun getAllLinks(): List<Note.Link> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
-        val linkNotes: MutableList<Note> = mutableListOf()
-        for ((number, index) in notes.withIndex())
-            if (index.javaClass.simpleName == "Link") linkNotes.add(notes[number])
-        if (linkNotes.isEmpty())
-            throw Exception("There are no Links")
-        return linkNotes
+            return emptyList()
+        return notes.filterIsInstance<Note.Link>()
     }
 
     override fun sortByTitle(): List<Note> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
+            return emptyList()
         notes.sortBy { it.title }
         return notes
     }
 
     override fun sortByDate(): List<Note> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
+            return emptyList()
         notes.sortWith(
             compareBy(
                 { it.date.year }, { it.date.month }, { it.date.day }
@@ -80,19 +65,17 @@ class ApplicationNotes : NoteService {
         return notes
     }
 
-    override fun removeNote(title: String) {
+    override fun removeNote(type: Class<out Note>, title: String) {
         if (notes.isEmpty())
             throw Exception("There are no Notes")
-        notes.removeIf { it.title == title }
+        notes.removeIf { it.title == title && it.javaClass == type}
     }
 
-    override fun findByTypeAndTitle(type: String, title: String): Note {
+    override fun findByTypeAndTitle(type: Class<out Note>, title: String): List<Note> {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
-        var count = 0
-        for ((number, index) in notes.withIndex())
-            if (index.javaClass.simpleName == type && index.title == title) count = number
-        return notes[count]
+            return emptyList()
+        val typeNotes: MutableList<Note> = notes.filterIsInstance(type) as MutableList<Note>
+        return typeNotes.filter { it.title == title }
     }
 
     override fun toString(): String {

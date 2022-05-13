@@ -11,7 +11,7 @@ fun main() {
     println(note1.getAllLinks())
     println(note1.sortByTitle())
     println(note1.sortByDate())
-    println(note1.findByTypeAndTitle("Link", "YouTube"))
-    note1.removeNote("Anime")
+    println(note1.findByTypeAndTitle(Note.Link::class.java, "YouTube"))
+    note1.removeNote(Note.TextNote::class.java, "Anime")
     println(note1.getAllNotes())
 }
