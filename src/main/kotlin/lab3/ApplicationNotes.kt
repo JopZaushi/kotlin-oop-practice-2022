@@ -65,10 +65,10 @@ class ApplicationNotes : NoteService {
         return notes
     }
 
-    override fun removeNote(type: Class<out Note>, title: String) {
+    override fun removeNote(note: Note) {
         if (notes.isEmpty())
-            throw Exception("There are no Notes")
-        notes.removeIf { it.title == title && it.javaClass == type}
+            throw IllegalArgumentException("There are no Notes")
+        notes.removeIf { it == note}
     }
 
     override fun findByTypeAndTitle(type: Class<out Note>, title: String): List<Note> {

@@ -13,7 +13,7 @@ interface NoteService {
     fun sortByTitle(): List<Note>
     fun sortByDate(): List<Note>
 
-    fun removeNote(type: Class<out Note>, title: String)
+    fun removeNote(note: Note)
 
     fun findByTypeAndTitle(type: Class<out Note>, title: String): List<Note>
 }
