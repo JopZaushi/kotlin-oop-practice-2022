@@ -1,8 +1,12 @@
 package lab2
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Triangle(
-    override val borderColor: Color,
-    override val fillColor: Color,
+    override val borderColor: @Contextual Color,
+    override val fillColor: @Contextual Color,
     val sideA: Double,
     val sideB: Double,
     val sideC: Double,
@@ -17,10 +21,10 @@ data class Triangle(
         return kotlin.math.sqrt(perimeter * (perimeter - sideA) * (perimeter - sideB) * (perimeter - sideC))
     }
 }
-
+@Serializable
 data class Circle(
-    override val borderColor: Color,
-    override val fillColor: Color,
+    override val borderColor: @Contextual Color,
+    override val fillColor: @Contextual Color,
     val radius: Double,
 ) : ColoredShape2d {
     init {
@@ -32,20 +36,20 @@ data class Circle(
         return 3.14 * radius * radius
     }
 }
-
+@Serializable
 data class Square(
-    override val borderColor: Color,
-    override val fillColor: Color,
+    override val borderColor: @Contextual Color,
+    override val fillColor: @Contextual Color,
     val side: Double,
 ) : ColoredShape2d {
     override fun calcArea(): Double {
         return side * side
     }
 }
-
+@Serializable
 data class Rectangle(
-    override val borderColor: Color,
-    override val fillColor: Color,
+    override val borderColor: @Contextual Color,
+    override val fillColor: @Contextual Color,
     val width: Double,
     val length: Double,
 ) : ColoredShape2d {

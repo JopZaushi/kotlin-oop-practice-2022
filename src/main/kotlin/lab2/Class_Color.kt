@@ -1,6 +1,9 @@
 package lab2
 
 //Shape colors and transparency
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Color(
     val red: Int,
     val green: Int,
