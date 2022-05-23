@@ -1,0 +1,18 @@
+[
+    {
+        "type": "lab2.Square",
+        "borderColor": {
+            "red": 255,
+            "green": 255,
+            "blue": 255,
+            "transparency": 5
+        },
+        "fillColor": {
+            "red": 255,
+            "green": 255,
+            "blue": 255,
+            "transparency": 5
+        },
+        "side": 3.0
+    }
+]
