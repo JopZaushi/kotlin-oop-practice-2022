@@ -4,10 +4,8 @@ import course_work.model.Cell
 import course_work.model.GAME_NOT_FINISHED
 import course_work.model.Model
 import course_work.model.ModelChangeListener
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Component
-import java.awt.GridLayout
+import java.awt.*
+import java.time.LocalDate
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
@@ -83,14 +81,15 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             val saveButton = JButton("Save")
             saveButton.addActionListener {
                 noteWindow.isVisible = false
-                val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
-                data[0] = arrayOf("Text Note", titleTextNote.text, "01.02.2002")
-                model.addRow(data[0])
+                val dataTime = LocalDate.now()
+                val name: Array<String> = arrayOf("Text Note", titleTextNote.text, "$dataTime")
+                model.addRow(name)
             }
             //табуляция
             windowTextNote.lineWrap = true
             //скроллинг
             val scrollPane = JScrollPane(windowTextNote)
+            //расположение элементов
             noteWindow.add(scrollPane, BorderLayout.CENTER)
             noteWindow.add(titleTextNote, BorderLayout.NORTH)
             noteWindow.add(saveButton, BorderLayout.SOUTH)
@@ -99,17 +98,71 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             noteWindow.setLocationRelativeTo(null)
 
         }
-        switchWindow.add(buttonTextNote)
+        switchWindow.add(buttonTextNote, BorderLayout.AFTER_LAST_LINE)
 
 
         val buttonToDoList = JButton("To do list")
         buttonToDoList.addActionListener {
+            switchWindow.isVisible = false
+            //новое окно для ввода заметки
+            val checkbox = JCheckBox()
+            val noteWindow = JDialog(this, "To do list")
+            val contentPane: Container = noteWindow.contentPane
+
+            val layout = SpringLayout()
+            contentPane.layout = layout
+
+            val box: Component = JCheckBox()
+            val field: Component = JTextField(15)
+
+            contentPane.add(box);
+            contentPane.add(field);
+
+            layout.putConstraint(SpringLayout.WEST, box, 10,
+                SpringLayout.WEST, contentPane);
+            layout.putConstraint(SpringLayout.NORTH, box, 25,
+                SpringLayout.NORTH, contentPane);
+            layout.putConstraint(SpringLayout.NORTH, field, 25,
+                SpringLayout.NORTH, contentPane);
+            layout.putConstraint(SpringLayout.WEST, field, 20,
+                SpringLayout.EAST, box);
+
+
+            //текстовое поле
+
+            val panel = JPanel()
+            //val windowTextNote = JTextArea(2, 25)
+            val titleTextNote = JTextField()
+
+            //titleTextNote.add(checkbox, BorderLayout.WEST)
+            //windowTextNote.add(checkbox)
+            //noteWindow.add(checkbox)
+
+            //кнопка сохранения
+            val saveButton = JButton("Save")
+            saveButton.addActionListener {
+                noteWindow.isVisible = false
+                val dataTime = LocalDate.now()
+                val name: Array<String> = arrayOf("To do list", titleTextNote.text, "$dataTime")
+                model.addRow(name)
+            }
+            //табуляция
+            //windowTextNote.lineWrap = true
+            //скроллинг
+            //val scrollPane = JScrollPane(windowTextNote)
+            //расположение элементов
+            //noteWindow.add(contentPane, BorderLayout.CENTER)
+            //layout.putConstraint(SpringLayout.NORTH, titleTextNote)
+            //noteWindow.add(saveButton, BorderLayout.SOUTH)
+            noteWindow.setSize(250, 350)
+            noteWindow.isVisible = true
+            noteWindow.setLocationRelativeTo(null)
 
         }
         switchWindow.add(buttonToDoList)
 
 
-        //Текстовая заметка
+        //Ссылка
         val buttonLink = JButton("Link")
         buttonLink.addActionListener {
             switchWindow.isVisible = false
@@ -122,9 +175,9 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             val saveButton = JButton("Save")
             saveButton.addActionListener {
                 noteWindow.isVisible = false
-                val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
-                data[0] = arrayOf("Link", titleTextNote.text, "01.02.2002")
-                model.addRow(data[0])
+                val dataTime = LocalDate.now()
+                val name: Array<String> = arrayOf("Link", titleTextNote.text, "$dataTime")
+                model.addRow(name)
             }
             //табуляция
             windowTextNote.lineWrap = true
