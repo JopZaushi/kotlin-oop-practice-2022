@@ -1,8 +1,4 @@
-package lab3
-
-import course_work.lab3.Date
-import course_work.lab3.Note
-import course_work.lab3.NoteService
+package course_work.lab3
 
 class ApplicationNotes : NoteService {
 

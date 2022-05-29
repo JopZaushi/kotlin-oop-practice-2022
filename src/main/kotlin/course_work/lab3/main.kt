@@ -1,4 +1,4 @@
-package lab3
+package course_work
 
 import course_work.lab3.ApplicationNotes
 import course_work.lab3.Date
