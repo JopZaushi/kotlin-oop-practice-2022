@@ -28,8 +28,11 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         defaultCloseOperation = EXIT_ON_CLOSE
         val name: Array<String> = arrayOf("Вид заметки", "Название", "Дата создания")
         model.setColumnIdentifiers(name)
+        model.addRow(name)
+        val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
+        data[0] = arrayOf("Text Note", "titleTextNote.text", "01.02.2002")
         updateFont(statusLabel, 20.0f)
-        table = JTable(model)
+        //table = JTable(model)
         rootPane.contentPane = JPanel(BorderLayout(GAP, GAP)).apply {
             add(statusLabel, BorderLayout.NORTH)
             add(table, BorderLayout.CENTER)
@@ -88,9 +91,10 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
                 noteWindow.isVisible = false
                 val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
                 data[0] = arrayOf("Text Note", titleTextNote.text, "01.02.2002")
-                val name: Array<String> = arrayOf("Название")
+                val name: Array<String> = arrayOf("Вид заметки", "Название", "Дата создания")
+                //model.setColumnIdentifiers(name)
                 model.addRow(data)
-                table = JTable(model)
+                //table = JTable(model)
             }
             //табуляция
             windowTextNote.lineWrap = true
