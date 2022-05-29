@@ -29,10 +29,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         val name: Array<String> = arrayOf("Вид заметки", "Название", "Дата создания")
         model.setColumnIdentifiers(name)
         model.addRow(name)
-        val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
-        data[0] = arrayOf("Text Note", "titleTextNote.text", "01.02.2002")
         updateFont(statusLabel, 20.0f)
-        //table = JTable(model)
         rootPane.contentPane = JPanel(BorderLayout(GAP, GAP)).apply {
             add(statusLabel, BorderLayout.NORTH)
             add(table, BorderLayout.CENTER)
@@ -46,8 +43,6 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
 
     private fun createCreateButton(): Component {
         val createButton = JButton("+")
-        //val note = listOf("Текст", "Дедлайн", "Ссылка")
-        //val icon = ImageIcon("src/main/kotlin/course_work/в.png")
         updateFont(createButton, 20.0f)
         createButton.addActionListener {
             if (gameModel.state in GAME_NOT_FINISHED) {
@@ -65,7 +60,6 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
                 resubscribe()
             }
         }
-
         return createButton
     }
 
@@ -91,10 +85,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
                 noteWindow.isVisible = false
                 val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
                 data[0] = arrayOf("Text Note", titleTextNote.text, "01.02.2002")
-                val name: Array<String> = arrayOf("Вид заметки", "Название", "Дата создания")
-                //model.setColumnIdentifiers(name)
-                model.addRow(data)
-                //table = JTable(model)
+                model.addRow(data[0])
             }
             //табуляция
             windowTextNote.lineWrap = true
@@ -118,8 +109,33 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         switchWindow.add(buttonToDoList)
 
 
+        //Текстовая заметка
         val buttonLink = JButton("Link")
         buttonLink.addActionListener {
+            switchWindow.isVisible = false
+            //новое окно для ввода заметки
+            val noteWindow = JDialog(this, "Link")
+            //текстовое поле
+            val windowTextNote = JTextArea(200, 250)
+            val titleTextNote = JTextField(250)
+            //кнопка сохранения
+            val saveButton = JButton("Save")
+            saveButton.addActionListener {
+                noteWindow.isVisible = false
+                val data: Array<Array<String>> = Array(1) { Array(3) { "" } }
+                data[0] = arrayOf("Link", titleTextNote.text, "01.02.2002")
+                model.addRow(data[0])
+            }
+            //табуляция
+            windowTextNote.lineWrap = true
+            //скроллинг
+            val scrollPane = JScrollPane(windowTextNote)
+            noteWindow.add(scrollPane, BorderLayout.CENTER)
+            noteWindow.add(titleTextNote, BorderLayout.NORTH)
+            noteWindow.add(saveButton, BorderLayout.SOUTH)
+            noteWindow.setSize(250, 350)
+            noteWindow.isVisible = true
+            noteWindow.setLocationRelativeTo(null)
 
         }
         switchWindow.add(buttonLink)
