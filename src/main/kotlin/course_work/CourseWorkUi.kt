@@ -106,21 +106,21 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         }
         switchWindow.add(buttonTextNote)
 
-        // Creating a button to restart the game
+
         val buttonToDoList = JButton("To do list")
         buttonToDoList.addActionListener {
 
         }
         switchWindow.add(buttonToDoList)
 
-        // Creating a button to return to the main menu
+
         val buttonLink = JButton("Link")
         buttonLink.addActionListener {
 
         }
         switchWindow.add(buttonLink)
 
-        // Creating a button to return to the main menu
+
         val buttonImage = JButton("Image")
         buttonLink.addActionListener {
 
