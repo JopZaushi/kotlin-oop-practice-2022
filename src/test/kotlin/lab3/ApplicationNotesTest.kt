@@ -1,8 +1,10 @@
 package lab3
 
+import course_work.lab3.ApplicationNotes
+import course_work.lab3.Date
+import course_work.lab3.Note
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class ApplicationNotesTest {
 
@@ -10,7 +12,7 @@ internal class ApplicationNotesTest {
     fun createTextNote() {
         val note1 = ApplicationNotes()
         note1.createTextNote("Ivan", "Ivanov", Date(13, 10, 2021))
-        assertEquals(1, note1.notes.size)
+        assertEquals(1, note1.getAllNotes().size)
         assertEquals(note1[0].title, "Ivan")
         assertEquals(note1[0].date.day, 13)
         assertEquals(note1[0].date.month, 10)
@@ -21,7 +23,7 @@ internal class ApplicationNotesTest {
     fun createTask() {
         val note1 = ApplicationNotes()
         note1.createTask("Do a lab on Kotlin", "3 Lab", "20.04.2022", Date(15, 4, 2022))
-        assertEquals(1, note1.notes.size)
+        assertEquals(1, note1.getAllNotes().size)
         assertEquals(note1[0].title, "Do a lab on Kotlin")
         assertEquals(note1[0].date.day, 15)
         assertEquals(note1[0].date.month, 4)
@@ -32,7 +34,7 @@ internal class ApplicationNotesTest {
     fun createLink() {
         val note1 = ApplicationNotes()
         note1.createLink("YouTube", "The Best", "https://www.youtube.com", Date(2, 12, 2021))
-        assertEquals(1, note1.notes.size)
+        assertEquals(1, note1.getAllNotes().size)
         assertEquals(note1[0].title, "YouTube")
         assertEquals(note1[0].date.day, 2)
         assertEquals(note1[0].date.month, 12)
@@ -96,12 +98,13 @@ internal class ApplicationNotesTest {
     @Test
     fun removeNote() {
         val note1 = ApplicationNotes()
+        val removeLink = note1.createLink("YouTube", "The Best", "https://www.youtube.com", Date(2, 12, 2021))
         note1.createTextNote("Anime", "Tokyo Ghoul, Attack of Titan, Naruto", Date(13, 10, 2021))
         note1.createTask("Do a lab on Kotlin", "3 Lab", "20.04.2022", Date(15, 4, 2022))
         note1.createLink("YouTube", "The Best", "https://www.youtube.com", Date(2, 12, 2021))
-        assertEquals(3, note1.notes.size)
-        note1.removeNote("Anime")
-        assertEquals(listOf(note1[0], note1[1]), note1.getAllNotes())
+        assertEquals(4, note1.getAllNotes().size)
+        note1.removeNote(removeLink)
+        assertEquals(listOf(note1[0], note1[1], note1[2]), note1.getAllNotes())
     }
 
     @Test
@@ -110,6 +113,6 @@ internal class ApplicationNotesTest {
         note1.createTextNote("Anime", "Tokyo Ghoul, Attack of Titan, Naruto", Date(13, 10, 2021))
         note1.createTask("Do a lab on Kotlin", "3 Lab", "20.04.2022", Date(15, 4, 2022))
         note1.createLink("YouTube", "The Best", "https://www.youtube.com", Date(2, 12, 2021))
-        assertEquals(note1[1], note1.findByTypeAndTitle("Task", "Do a lab on Kotlin"))
+        assertEquals(listOf(note1[1]), note1.findByTypeAndTitle(Note.Task::class.java, "Do a lab on Kotlin"))
     }
 }
