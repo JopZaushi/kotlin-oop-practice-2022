@@ -22,11 +22,11 @@ class Serialization {
         }
     }
 
-    fun encode(shape: MutableList<ColoredShape2d>): String {
+    fun encode(shape: List<ColoredShape2d>): String {
         return (json.encodeToString(shape))
     }
 
-    fun decode(shape: String): MutableList<ColoredShape2d> {
+    fun decode(shape: String): List<ColoredShape2d> {
         return (json.decodeFromString(shape))
     }
 
