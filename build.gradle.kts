@@ -14,6 +14,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.hisp:grid:1.0.0")
+    implementation("org.webjars.npm:tabulator-tables:5.2.4")
     testImplementation(kotlin("test"))
     implementation(kotlin("reflect"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")

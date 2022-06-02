@@ -1,10 +1,8 @@
-package course_work.view
+package course_work
 
-import course_work.model.Cell
-import course_work.model.GAME_NOT_FINISHED
-import course_work.model.Model
-import course_work.model.ModelChangeListener
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Component
+import java.awt.GridLayout
 import java.time.LocalDate
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
@@ -13,9 +11,7 @@ import javax.swing.table.DefaultTableModel
 private const val GAP = 15
 
 class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
-    private var gameModel: Model = Model()
-    private val statusLabel = JLabel("Status", JLabel.CENTER)
-    private val buttons = mutableListOf<MutableList<JButton>>()
+    private val statusLabel = JLabel("Notes", JLabel.CENTER)
 
     private val model = DefaultTableModel()
     private var table = JTable(model)
@@ -32,10 +28,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             add(statusLabel, BorderLayout.NORTH)
             add(table, BorderLayout.CENTER)
             add(createCreateButton(), BorderLayout.SOUTH)
-            //border = BorderFactory.createEmptyBorder(GAP, 80, GAP, 80)
         }
-
-        resubscribe()
     }
 
 
@@ -43,20 +36,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         val createButton = JButton("+")
         updateFont(createButton, 20.0f)
         createButton.addActionListener {
-            if (gameModel.state in GAME_NOT_FINISHED) {
-                /*val creationNote = JOptionPane.showInputDialog(
-                    this,
-                    "Выберите заметку",
-                    "Создание",
-                    JOptionPane.QUESTION_MESSAGE,
-                    icon,
-                    note.toTypedArray(),
-                    note[0]
-                )*/
                 createSwitchWindow()
-            } else {
-                resubscribe()
-            }
         }
         return createButton
     }
@@ -100,60 +80,44 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         }
         switchWindow.add(buttonTextNote, BorderLayout.AFTER_LAST_LINE)
 
-
+        //Задача
         val buttonToDoList = JButton("To do list")
         buttonToDoList.addActionListener {
             switchWindow.isVisible = false
             //новое окно для ввода заметки
-            val checkbox = JCheckBox()
             val noteWindow = JDialog(this, "To do list")
-            val contentPane: Container = noteWindow.contentPane
 
-            val layout = SpringLayout()
-            contentPane.layout = layout
+            //создание таблицы для задач
+            val dm = DefaultTableModel()
+            dm.getColumnClass(0)
+            val name: Array<Any> = arrayOf("", "")
+            dm.setColumnIdentifiers(name)
+            val jTable1 = JTable()
+            jTable1.model = dm
+            jTable1.getColumn("").cellEditor = DefaultCellEditor(JCheckBox())
 
-            val box: Component = JCheckBox()
-            val field: Component = JTextField(15)
-
-            contentPane.add(box);
-            contentPane.add(field);
-
-            layout.putConstraint(SpringLayout.WEST, box, 10,
-                SpringLayout.WEST, contentPane);
-            layout.putConstraint(SpringLayout.NORTH, box, 25,
-                SpringLayout.NORTH, contentPane);
-            layout.putConstraint(SpringLayout.NORTH, field, 25,
-                SpringLayout.NORTH, contentPane);
-            layout.putConstraint(SpringLayout.WEST, field, 20,
-                SpringLayout.EAST, box);
-
-
-            //текстовое поле
-
-            val panel = JPanel()
-            //val windowTextNote = JTextArea(2, 25)
-            val titleTextNote = JTextField()
-
-            //titleTextNote.add(checkbox, BorderLayout.WEST)
-            //windowTextNote.add(checkbox)
-            //noteWindow.add(checkbox)
-
-            //кнопка сохранения
+            //кнопки добавления и сохранения
+            val addButton = JButton("+")
+            addButton.addActionListener {
+                dm.addRow(name)
+            }
             val saveButton = JButton("Save")
             saveButton.addActionListener {
                 noteWindow.isVisible = false
                 val dataTime = LocalDate.now()
-                val name: Array<String> = arrayOf("To do list", titleTextNote.text, "$dataTime")
-                model.addRow(name)
+                val data: Array<String> = arrayOf("To do list", jTable1.getValueAt(0, 1).toString(), "$dataTime")
+                model.addRow(data)
             }
-            //табуляция
-            //windowTextNote.lineWrap = true
-            //скроллинг
-            //val scrollPane = JScrollPane(windowTextNote)
-            //расположение элементов
-            //noteWindow.add(contentPane, BorderLayout.CENTER)
-            //layout.putConstraint(SpringLayout.NORTH, titleTextNote)
-            //noteWindow.add(saveButton, BorderLayout.SOUTH)
+
+            //добавление кнопок в одну структуру
+            val grid = JPanel()
+            val lay = GridLayout(1, 0, 5, 12)
+            grid.layout = lay
+            grid.add(saveButton)
+            grid.add(addButton)
+
+            noteWindow.add(grid, BorderLayout.SOUTH)
+            noteWindow.add(jTable1)
             noteWindow.setSize(250, 350)
             noteWindow.isVisible = true
             noteWindow.setLocationRelativeTo(null)
@@ -193,9 +157,23 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         }
         switchWindow.add(buttonLink)
 
-
+        //Картинка
         val buttonImage = JButton("Image")
-        buttonLink.addActionListener {
+        buttonImage.addActionListener {
+            switchWindow.isVisible = false
+            // Создание экземпляра JFileChooser
+            val fileChooser = JFileChooser()
+            fileChooser.dialogTitle = "Сохранение файла"
+            // Определение режима - только файл
+            fileChooser.fileSelectionMode = JFileChooser.FILES_ONLY
+            val result = fileChooser.showSaveDialog(JDialog())
+            // Если директория выбрана, покажем ее в сообщении
+            if (result == JFileChooser.APPROVE_OPTION) {
+                fileChooser.isVisible = false
+                val dataTime = LocalDate.now()
+                val data: Array<String> = arrayOf("Image", fileChooser.selectedFile.toString(), "$dataTime")
+                model.addRow(data)
+            }
 
         }
         switchWindow.add(buttonImage)
@@ -203,35 +181,6 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
         switchWindow.isVisible = true
     }
 
-    //обновление окна
-    private fun resubscribe() {
-        gameModel.removeModelChangeListener(this)
-        gameModel = Model()
-        gameModel.addModelChangeListener(this)
-        updateGameUI()
-
-    }
-
-
-    /*private fun createBoardPanel(): Component {
-        val gamePanel = JPanel(GridLayout(BOARD_SIZE, BOARD_SIZE, GAP, GAP))
-
-        for (i in 0 until 1) {
-            val buttonsRow = mutableListOf<JButton>()
-            for (j in 0 until BOARD_SIZE) {
-                val cellButton = JButton()
-                cellButton.addActionListener {
-                    gameModel.doMove(j, i)
-                }
-                buttonsRow.add(cellButton)
-                gamePanel.add(cellButton)
-                updateFont(cellButton, 30.0f)
-            }
-            buttons.add(buttonsRow)
-        }
-
-        return gamePanel
-    }*/
 
     private fun updateFont(component: JComponent, newFontSize: Float) {
         val font = component.font
@@ -240,25 +189,6 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
     }
 
     override fun onModelChanged() {
-        updateGameUI()
-    }
 
-    private fun updateGameUI() {
-        val state = gameModel.state
-        statusLabel.text = state.textValue
-
-        for ((i, buttonRow) in buttons.withIndex()) {
-            for ((j, button) in buttonRow.withIndex()) {
-                val cell = gameModel.board[i][j]
-                button.text = cell.toString()
-
-                button.isEnabled = cell == Cell.EMPTY && state in GAME_NOT_FINISHED
-                button.foreground = when (cell) {
-                    Cell.X -> Color.BLUE
-                    Cell.O -> Color.RED
-                    Cell.EMPTY -> Color.BLACK
-                }
-            }
-        }
     }
 }
