@@ -1,12 +1,14 @@
 package course_work.lab3
 
-sealed class Note(open val title: String, open val date: Date) {
+import java.time.LocalDate
+
+sealed class CWNote(open val title: String, open val date: LocalDate) {
 
     class TextNote(
         override val title: String,
         val content: String,
-        override val date: Date,
-    ) : Note(title, date) {
+        override val date: LocalDate,
+    ) : CWNote(title, date) {
         override fun toString(): String {
             return "TextNote: $title\n" +
                     "$content\n" +
@@ -19,8 +21,8 @@ sealed class Note(open val title: String, open val date: Date) {
         override val title: String,
         val content: String,
         val deadline: String,
-        override val date: Date,
-    ) : Note(title, date) {
+        override val date: LocalDate,
+    ) : CWNote(title, date) {
         override fun toString(): String {
             return "Task: $title||Deadline: $deadline\n" +
                     "$content\n" +
@@ -32,8 +34,8 @@ sealed class Note(open val title: String, open val date: Date) {
         override val title: String,
         val content: String,
         val url: String,
-        override val date: Date,
-    ) : Note(title, date) {
+        override val date: LocalDate,
+    ) : CWNote(title, date) {
         override fun toString(): String {
             return "Link: $title  $url\n" +
                     "$content\n" +

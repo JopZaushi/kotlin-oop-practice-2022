@@ -1,9 +1,5 @@
 package lab3
 
-import course_work.lab3.Date
-import course_work.lab3.Note
-import course_work.lab3.NoteService
-
 class ApplicationNotes : NoteService {
 
     private val notes: MutableList<Note> = mutableListOf()

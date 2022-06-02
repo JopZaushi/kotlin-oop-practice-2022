@@ -1,7 +1,5 @@
 package lab3
 
-import course_work.lab3.Date
-import course_work.lab3.Note
 
 interface NoteService {
     fun getAllNotes(): List<Note>

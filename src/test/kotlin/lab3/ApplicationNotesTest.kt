@@ -1,8 +1,5 @@
 package lab3
 
-import course_work.lab3.ApplicationNotes
-import course_work.lab3.Date
-import course_work.lab3.Note
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
