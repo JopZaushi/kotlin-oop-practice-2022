@@ -4,6 +4,7 @@ import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.GridLayout
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.time.LocalDate
 import javax.swing.*
@@ -14,7 +15,7 @@ private const val GAP = 15
 
 class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
     private val statusLabel = JLabel("Notes", JLabel.CENTER)
-    private val model = DefaultTableModel()
+    private var model = DefaultTableModel()
     private val table = JTable(model)
     private val listText = mutableListOf<String>()
     private val lineList = mutableListOf<String>()
@@ -23,6 +24,13 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
     init {
         setSize(400, 700)
         defaultCloseOperation = EXIT_ON_CLOSE
+        //Запрет на редактирование
+        model = object : DefaultTableModel() {
+            override fun isCellEditable(row: Int, column: Int): Boolean {
+                return false
+            }
+        }
+        table.model = model
         val name: Array<String> = arrayOf("Вид заметки", "Название", "Дата создания")
         model.setColumnIdentifiers(name)
         model.addRow(name)
@@ -36,24 +44,48 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             val data: Array<String> = arrayOf(lineList[i], lineList[i + 1], lineList[i + 2])
             model.addRow(data)
         }
+        //table.isCellEditable(0,0)
+
         //ОЧИСТКА ФАЙЛА
-        //FileOutputStream("src/main/kotlin/course_work/readTable.txt")
+        FileOutputStream("src/main/kotlin/course_work/readTable.txt")
         updateFont(statusLabel, 20.0f)
         rootPane.contentPane = JPanel(BorderLayout(GAP, GAP)).apply {
             add(statusLabel, BorderLayout.NORTH)
             add(table, BorderLayout.CENTER)
-            add(createCreateButton(), BorderLayout.SOUTH)
+            add(createButtons(), BorderLayout.SOUTH)
         }
     }
 
 
-    private fun createCreateButton(): Component {
+    private fun createButtons(): Component {
         val createButton = JButton("+")
+        val deleteButton = JButton("Remove")
         updateFont(createButton, 20.0f)
+        //добавление кнопок в одну структуру
+        val grid = JPanel()
+        val lay = GridLayout(1, 0, 5, 12)
+        grid.layout = lay
+        grid.add(createButton)
+        grid.add(deleteButton)
         createButton.addActionListener {
             createSwitchWindow()
         }
-        return createButton
+        deleteButton.addActionListener {
+            val row = table.selectedRow * 3
+            lineList.removeAt(row - 1)
+            lineList.removeAt(row - 2)
+            lineList.removeAt(row - 3)
+            FileOutputStream("src/main/kotlin/course_work/readTable.txt")
+            //Запись в файл
+            File("src/main/kotlin/course_work/readTable.txt").bufferedWriter().use { out ->
+                for (i in 0 until lineList.size) {
+                    out.write(lineList[i])
+                    out.write("\n")
+                }
+            }
+            model.removeRow(table.selectedRow)
+        }
+        return grid
     }
 
     private fun createSwitchWindow() {
@@ -131,7 +163,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             jTable1.model = modelCheckBox
 
             //Настройка шириины 1 столбца
-            val columnModel = jTable1.columnModel.getColumn( 0 )
+            val columnModel = jTable1.columnModel.getColumn(0)
             columnModel.maxWidth = 15
 
             //кнопки добавления и сохранения
@@ -139,14 +171,16 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             addButton.addActionListener {
                 modelCheckBox.addRow(name)
             }
+
+            val titleTextNote = JTextField(250)
             val saveButton = JButton("Save")
             saveButton.addActionListener {
                 noteWindow.isVisible = false
                 val dataTime = LocalDate.now()
-                val data: Array<String> = arrayOf("To do list", jTable1.getValueAt(0, 1).toString(), "$dataTime")
+                val data: Array<String> = arrayOf("To do list", titleTextNote.text, "$dataTime")
                 model.addRow(data)
                 lineList.add("To do list")
-                lineList.add(jTable1.getValueAt(0, 1).toString())
+                lineList.add(titleTextNote.text)
                 lineList.add("$dataTime")
                 //Запись в файл
                 File("src/main/kotlin/course_work/readTable.txt").bufferedWriter().use { out ->
@@ -164,6 +198,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
             grid.add(saveButton)
             grid.add(addButton)
 
+            noteWindow.add(titleTextNote, BorderLayout.NORTH)
             noteWindow.add(grid, BorderLayout.SOUTH)
             noteWindow.add(jTable1)
             noteWindow.setSize(250, 350)
