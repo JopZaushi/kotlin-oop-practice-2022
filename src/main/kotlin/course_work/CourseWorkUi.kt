@@ -23,7 +23,6 @@ class CourseWorkUi : JFrame("Notes") {
     private val lineList = mutableListOf<String>()
     private val numberTask = mutableListOf<String>()
 
-
     //конструктор главной панели
     init {
         setSize(400, 700)
