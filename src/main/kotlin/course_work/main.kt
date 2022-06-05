@@ -9,6 +9,7 @@ fun main() {
         ticTacToeUi.setLocationRelativeTo(null)
         ticTacToeUi.isVisible = true
     }
+
     val data = LocalDateTime.now()
     println(data)
 }

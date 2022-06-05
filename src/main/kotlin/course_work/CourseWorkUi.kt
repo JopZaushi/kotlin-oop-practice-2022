@@ -20,6 +20,7 @@ class CourseWorkUi : JFrame("Notes"), ModelChangeListener {
     private val listText = mutableListOf<String>()
     private val lineList = mutableListOf<String>()
 
+
     //конструктор главной панели
     init {
         setSize(400, 700)
