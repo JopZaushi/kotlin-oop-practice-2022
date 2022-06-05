@@ -92,8 +92,6 @@ class CourseWorkUi : JFrame("Notes") {
                     if (lineList[i] == "To do list" || lineList[i] == "Image")
                         numberTaskBefore++
                 }
-                println(row)
-                println(numberTaskBefore)
                 content.removeAt(row / 3 - numberTaskBefore - 1)
                 File("src/main/kotlin/course_work/texts.txt").bufferedWriter().use { out ->
                     for (i in 0 until content.size) {
@@ -117,8 +115,8 @@ class CourseWorkUi : JFrame("Notes") {
                 }
 
                 for (i in 0 until numberTask[numTask - 1].toInt()) {
-                    task.removeAt(sum + i)
-                    task.removeAt(sum + i)
+                    task.removeAt(sum)
+                    task.removeAt(sum)
                 }
                 numberTask.removeAt(numTask - 1)
 
@@ -144,8 +142,7 @@ class CourseWorkUi : JFrame("Notes") {
                     if (lineList[i] == "To do list" || lineList[i] == "Image")
                         numberTaskBefore++
                 }
-                println(row)
-                println(numberTaskBefore)
+
                 content.removeAt(row / 3 - numberTaskBefore - 1)
                 File("src/main/kotlin/course_work/texts.txt").bufferedWriter().use { out ->
                     for (i in 0 until content.size) {
@@ -517,7 +514,7 @@ class CourseWorkUi : JFrame("Notes") {
                 lineList.add(titleTextNote.text)
                 lineList.add("$dataTime")
                 numberTask.add(number.toString())
-                //println(number)
+
                 for (i in 0 until number) {
                     task.add(jTable1.getValueAt(i, 0).toString())
                     task.add(jTable1.getValueAt(i, 1).toString())
