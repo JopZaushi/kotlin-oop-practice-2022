@@ -15,13 +15,14 @@ repositories {
 
 dependencies {
     implementation("org.hisp:grid:1.0.0")
-    implementation("org.webjars.npm:tabulator-tables:5.2.4")
+    implementation("org.webjars.npm:tabulator-tables:5.3.4")
     testImplementation(kotlin("test"))
     implementation(kotlin("reflect"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-    implementation("org.apache.logging.log4j:log4j-api:2.17.2")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    implementation("org.apache.logging.log4j:log4j-api:2.19.0")
+    implementation("org.apache.logging.log4j:log4j-core:2.19.0")
     implementation("org.apache.commons:commons-csv:1.9.0")
+    implementation ("com.google.code.gson:gson:2.9.1")
 
 }
 

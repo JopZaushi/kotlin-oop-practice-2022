@@ -41,5 +41,4 @@ sealed class Note(open val title: String, open val date: Date) {
         }
     }
 
-
 }
