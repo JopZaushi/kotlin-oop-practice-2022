@@ -71,3 +71,8 @@ fun parser() {
         Desktop.getDesktop().browse(URI.create("https://ru.wikipedia.org/w/index.php?curid=$article"))
     }
 }
+
+
+
+
+
